@@ -1,6 +1,7 @@
 import os
 
 from fastapi import FastAPI
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
@@ -33,7 +34,7 @@ class QARequest(BaseModel):
 
 @app.get("/")
 def home():
-    return {"message": "EduGenie AI Backend is running!"}
+    return FileResponse("frontend/index.html")
 
 
 # 1. Q&A
