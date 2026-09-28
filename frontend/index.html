@@ -1,205 +1,201 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduGenie AI</title>
+    <title>EduGenie AI</title><style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f7fb;
+        margin: 0;
+        padding: 0;
+    }
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f7fb;
-            margin: 0;
-            padding: 0;
-        }
+    .container {
+        max-width: 800px;
+        margin: 60px auto;
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
 
-        .container {
-            max-width: 800px;
-            margin: 60px auto;
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
+    h1 {
+        text-align: center;
+        color: #333;
+    }
 
-        h1 {
-            text-align: center;
-            color: #333;
-        }
+    p {
+        text-align: center;
+        color: #666;
+    }
 
-        p {
-            text-align: center;
-            color: #666;
-        }
+    select,
+    textarea {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        font-size: 16px;
+        margin-top: 10px;
+    }
 
-        select,
-        textarea {
-            width: 100%;
-            box-sizing: border-box;
-            padding: 15px;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            font-size: 16px;
-            margin-top: 10px;
-        }
+    textarea {
+        height: 120px;
+        resize: none;
+    }
 
-        textarea {
-            height: 120px;
-            resize: none;
-        }
+    button {
+        display: block;
+        margin: 20px auto;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 8px;
+        background: #4f46e5;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+    }
 
-        button {
-            display: block;
-            margin: 20px auto;
-            padding: 12px 30px;
-            border: none;
-            border-radius: 8px;
-            background: #4f46e5;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-        }
+    button:hover {
+        background: #3730a3;
+    }
 
-        button:hover {
-            background: #3730a3;
-        }
+    #answer {
+        margin-top: 20px;
+        padding: 20px;
+        background: #f0f4ff;
+        border-radius: 10px;
+        min-height: 50px;
+        white-space: pre-wrap;
+    }
+</style>
 
-        #answer {
-            margin-top: 20px;
-            padding: 20px;
-            background: #f0f4ff;
-            border-radius: 10px;
-            min-height: 50px;
-            white-space: pre-wrap;
-        }
-    </style>
-</head>
+</head><body><div class="container">
 
-<body>
+    <h1>🎓 EduGenie AI</h1>
 
-    <div class="container">
+    <p>Learn, understand and practice with AI</p>
 
-        <h1>🎓 EduGenie AI</h1>
+    <select id="task">
+        <option value="qa">QnA</option>
+        <option value="explain">Explain</option>
+        <option value="quiz">Quiz</option>
+        <option value="summarize">Summary</option>
+        <option value="recommendations">Recommend Path</option>
+    </select>
 
-        <p>Learn, understand and practice with AI</p>
+    <textarea id="question"
+        placeholder="Type your question or topic here..."></textarea>
 
-        <select id="task">
-            <option value="qa">QnA</option>
-            <option value="explain">Explain</option>
-            <option value="quiz">Quiz</option>
-            <option value="summarize">Summary</option>
-            <option value="recommendations">Recommend Path</option>
-        </select>
+    <button onclick="runTask()">
+        Submit
+    </button>
 
-        <textarea id="question"
-            placeholder="Type your question or topic here..."></textarea>
-
-        <button onclick="runTask()">
-            Submit
-        </button>
-
-        <div id="answer">
-            Result will appear here...
-        </div>
-
+    <div id="answer">
+        Result will appear here...
     </div>
 
-    <script>
-        async function runTask() {
+</div>
 
-            const task = document.getElementById("task").value;
-            const text = document.getElementById("question").value;
-            const answerBox = document.getElementById("answer");
+<script>
+    async function runTask() {
 
-            if (!text.trim()) {
-                answerBox.innerText = "Please enter your question or topic.";
-                return;
+        const task = document.getElementById("task").value;
+        const text = document.getElementById("question").value;
+        const answerBox = document.getElementById("answer");
+
+        if (!text.trim()) {
+            answerBox.innerText = "Please enter your question or topic.";
+            return;
+        }
+
+        answerBox.innerText = "Thinking...";
+
+        let url;
+        let body;
+
+        if (task === "qa") {
+            url = "http://127.0.0.1:8000/qa";
+            body = {
+                question: text
+            };
+
+        } else if (task === "explain") {
+            url = "http://127.0.0.1:8000/explain";
+            body = {
+                text: text
+            };
+
+        } else if (task === "quiz") {
+            url = "http://127.0.0.1:8000/quiz";
+            body = {
+                text: text
+            };
+
+        } else if (task === "summarize") {
+            url = "http://127.0.0.1:8000/summarize";
+            body = {
+                text: text
+            };
+
+        } else if (task === "recommendations") {
+            url = "http://127.0.0.1:8000/learn/recommendations";
+            body = {
+                text: text
+            };
+        }
+
+        try {
+
+            const response = await fetch(url, {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify(body)
+            });
+
+            const data = await response.json();
+
+            console.log("Backend response:", data);
+
+            if (!response.ok) {
+                throw new Error(data.detail || "Request failed");
             }
-
-            answerBox.innerText = "Thinking...";
-
-            let url;
-            let body;
 
             if (task === "qa") {
-                url = "http://127.0.0.1:8000/qa";
-
-                body = {
-                    question: text
-                };
+                answerBox.innerText =
+                    data.answer || JSON.stringify(data);
 
             } else if (task === "explain") {
-                url = "http://127.0.0.1:8000/explain";
-
-                body = {
-                    text: text
-                };
+                answerBox.innerText =
+                    data.explanation || JSON.stringify(data);
 
             } else if (task === "quiz") {
-                url = "http://127.0.0.1:8000/quiz";
-
-                body = {
-                    text: text
-                };
+                answerBox.innerText =
+                    data.quiz || JSON.stringify(data);
 
             } else if (task === "summarize") {
-                url = "http://127.0.0.1:8000/summarize";
-
-                body = {
-                    text: text
-                };
+                answerBox.innerText =
+                    data.summary || JSON.stringify(data);
 
             } else if (task === "recommendations") {
-                url = "http://127.0.0.1:8000/learn/recommendations";
-
-                body = {
-                    text: text
-                };
-            }
-
-            try {
-
-                const response = await fetch(url, {
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-
-                    body: JSON.stringify(body)
-                });
-
-                const data = await response.json();
-
-                if (!response.ok) {
-                    throw new Error(data.detail || "Request failed");
-                }
-
-                if (task === "qa") {
-                    answerBox.innerText = data.answer;
-
-                } else if (task === "explain") {
-                    answerBox.innerText = data.explanation;
-
-                } else if (task === "quiz") {
-                    answerBox.innerText = data.quiz;
-
-                } else if (task === "summarize") {
-                    answerBox.innerText = data.summary;
-
-                } else if (task === "recommendations") {
-                    answerBox.innerText = data.recommendations;
-                }
-
-            } catch (error) {
-
-                console.error(error);
-
                 answerBox.innerText =
-                    "Error connecting to EduGenie backend.";
+                    data.recommendations || JSON.stringify(data);
             }
+
+        } catch (error) {
+
+            console.error("EduGenie Error:", error);
+
+            answerBox.innerText =
+                "❌ Error: " + error.message;
         }
-    </script>
+    }
+</script>
 
 </body>
 </html>
